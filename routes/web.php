@@ -17,3 +17,6 @@ Route::get('/', function(){
 });
 Route::get('/products', 'SinglePageController@index');
 Route::post('/products', 'SinglePageController@store');
+Route::get('/products/edit/{id}', 'SinglePageController@edit');
+Route::patch('/products/edit/{id}', 'SinglePageController@update');
+Route::delete('/products/{id}', 'SinglePageController@destroy');

@@ -12,8 +12,11 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editModal" @click="getProduct(product.id)">Edit</button>
+                                    <edit-product v-bind:productToEdit="productToEdit" @product-updated="refresh"></edit-product>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" @click="deleteProduct(product.id)">Delete</button>
                                 </div>
+                                
                                 <small class="text-muted">9 mins</small>
                             </div>
                         </div>
@@ -21,7 +24,6 @@
                 </div>
                 <pagination :data="products" @pagination-change-page="getResults"></pagination>
             </div>
-            
         </div>
     </div>
 </template>
@@ -30,7 +32,8 @@
     export default {
           data(){
             return {
-                products: {}
+                products: {},
+                productToEdit: ''
             }
         },
         created(){
@@ -45,8 +48,18 @@
                         this.products = response.data;
                 });
             },
+            deleteProduct(id){
+                axios.delete('http://localhost:8000/products/' + id)
+                .then(response => this.products = response.data)
+                .catch(error => console.log(error));               
+            },
             refresh(products){
                 this.products = products.data; 
+            },
+            getProduct(id){
+                axios.get('http://localhost:8000/products/edit/' + id)
+                .then(response => this.productToEdit = response.data)
+                .catch(error => console.log(error));
             },
             mounted() {
                 console.log('Component mounted.')

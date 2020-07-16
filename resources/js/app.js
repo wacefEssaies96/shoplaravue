@@ -6,14 +6,12 @@ Vue.use(VueRouter);
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('add-product', require('./components/AddProductComponent.vue').default);
-//Vue.component('test', require('./components/TestComponent.vue').default);
+Vue.component('edit-product', require('./components/EditProductComponent.vue').default);
 
 import products from './components/ProductsComponent.vue';
-import test from './components/TestComponent.vue';
 
 const routes = [
     {path: '/products', component: products},
-    {path: '/test', component : test}
 ];
 
 const router = new VueRouter({routes});
